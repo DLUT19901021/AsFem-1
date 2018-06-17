@@ -1,8 +1,6 @@
 # AsFem
 **AsFem** is short for *a simple finite element method* program, for my own personal interests.
 
-# Why?
-Fuck FEM or fucked by FEM, this is realy a question, isn't it?
 
 
 # Catagories
