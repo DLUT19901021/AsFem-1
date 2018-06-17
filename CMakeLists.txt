@@ -23,4 +23,4 @@ set(mpi "/opt/moose/mpich-3.2/gcc-7.3.0")
 link_libraries("${mpi}/lib/libmpi.so")
 include_directories("${mpi}/include")
 
-add_executable(AsFem src/main.cpp src/Mesh/MeshBase.h src/Mesh/Mesh1D.cpp src/Mesh/Mesh1D.h src/Welcome.h)
+add_executable(ASFEM src/main.cpp src/Mesh/MeshBase.h src/Mesh/Mesh1D.cpp src/Mesh/Mesh1D.h src/Welcome.h src/Mesh/Mesh2D.cpp src/Mesh/Mesh2D.h src/StringUtils/StringUtils.h src/StringUtils/RemoveSpace.cpp src/StringUtils/StrToLower.cpp src/StringUtils/StrVecToLower.cpp src/StringUtils/StrToUpper.cpp src/StringUtils/StrVecToUpper.cpp src/StringUtils/SplitStr.cpp src/StringUtils/SplitNum.cpp src/StringUtils/SplitNumAfter.cpp src/Mesh/Mesh.cpp src/Mesh/Mesh.h)

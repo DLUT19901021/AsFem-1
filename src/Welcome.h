@@ -16,7 +16,7 @@
 void Welcome(double version=0.1)
 {
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
-    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Welcome to use AsFem ^_^               ***\n");
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Welcome to use ASFEM                   ***\n");
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** A Simple Finite Element Method program ***\n");
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Version: %6.1f                        ***\n",version);
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Author: Yang Bai @ CopyRight           ***\n");

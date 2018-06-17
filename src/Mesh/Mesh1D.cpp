@@ -22,6 +22,8 @@ Mesh1D::Mesh1D(double xmin, double xmax, int nx,string elmttype)
         abort();
     }
 
+    string str=RemoveSpace(elmttype);
+    elmttype=StrToLower(str);
     if(elmttype.find("edge2")==string::npos&&
        elmttype.find("edge3")==string::npos&&
        elmttype.find("edge4")==string::npos)
@@ -35,12 +37,23 @@ Mesh1D::Mesh1D(double xmin, double xmax, int nx,string elmttype)
 
     Xmin=xmin;Xmax=xmax;
     Nx=nx;
+    nNodes=0;nNodesPerElmt=0;nElmts=0;
     MeshGenerated=false;
     ElmtType=elmttype;
 
     nBoundaryNodeIndex=0;
+    MeshGenerated=false;
 }
 
+void Mesh1D::Release()
+{
+    if(MeshGenerated)
+    {
+        delete[] NodeCoords;
+        delete[] Conn;
+    }
+}
+//**********************************************
 bool Mesh1D::CreateMesh()
 {
     PetscMPIInt rank,size;
@@ -50,7 +63,12 @@ bool Mesh1D::CreateMesh()
     int i,j,e;
     MeshGenerated=false;
 
-    if(ElmtType=="edge2") P=1;
+    VTKCellType=4;
+    if(ElmtType=="edge2")
+    {
+        P=1;
+        VTKCellType=3;
+    }
     if(ElmtType=="edge3") P=2;
     if(ElmtType=="edge4") P=3;
 
@@ -70,10 +88,13 @@ bool Mesh1D::CreateMesh()
     MPI_Comm_size(PETSC_COMM_WORLD,&size);
     MPI_Comm_rank(PETSC_COMM_WORLD,&rank);
 
+    //TODO: it seems I need to consider about the mesh split by
+    //      different cores, and the ghost effects!!!
     rankn=nNodes/size;
     iStart=rank*rankn;
     iEnd=(rank+1)*rankn;
     if(rank==size-1) iEnd=nNodes;
+
     iStart=0;iEnd=nNodes;
     for(i=iStart;i<iEnd;++i)
     {
@@ -83,10 +104,15 @@ bool Mesh1D::CreateMesh()
         NodeCoords[i*4+3]=0.0;
     }
 
+
+    //TODO: make mesh generation also parallel!
+    /*
     rankn=nElmts/size;
     iStart=rank*rankn;
     iEnd=(rank+1)*rankn;
     if(rank==size-1) iEnd=nElmts;
+    */
+
     iStart=0;iEnd=nElmts;
     for(e=iStart;e<iEnd;++e)
     {
@@ -97,6 +123,8 @@ bool Mesh1D::CreateMesh()
     }
 
     MeshGenerated=true;
+
+    return MeshGenerated;
 }
 
 // Get element information
