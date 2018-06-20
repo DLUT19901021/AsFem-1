@@ -8,7 +8,7 @@
 //*****************************************************
 
 #include <sstream>
-#include "StringUtils.h"
+#include "StringUtils/StringUtils.h"
 
 vector<string> SplitStr(string instr,char symbol)
 {

@@ -2,7 +2,7 @@
 // Created by Y. Bai on 17.06.18.
 //
 
-#include "Mesh1D.h"
+#include "Mesh/Mesh1D.h"
 
 Mesh1D::Mesh1D(double xmin, double xmax, int nx,string elmttype)
 {

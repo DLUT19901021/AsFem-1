@@ -7,7 +7,7 @@
 //*** Function to split number from input string    ***
 //*****************************************************
 
-#include "StringUtils.h"
+#include "StringUtils/StringUtils.h"
 
 vector<double> SplitNum(string instr)
 {

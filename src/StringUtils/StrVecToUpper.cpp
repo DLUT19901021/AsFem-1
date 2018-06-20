@@ -8,7 +8,7 @@
 //*****************************************************
 
 #include <algorithm>
-#include "StringUtils.h"
+#include "StringUtils/StringUtils.h"
 
 vector<string> StrVecToUpper(vector<string> instrvec)
 {

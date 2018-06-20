@@ -1,8 +1,17 @@
 # AsFem
-**AsFem** is short for *a simple finite element method* program, for my own personal interests.
+**AsFem** is short for *a simple finite element method* program, for my own personal interests. I develop it via the [VSCODE](https://code.visualstudio.com/).
 
-# Why?
-Fuck FEM or fucked by FEM, this is realy a question, isn't it?
+# Requirement
+- [cmake](https://cmake.org/)
+- [gcc/g++](https://gcc.gnu.org/)
+- [PETSc](https://www.mcs.anl.gov/petsc/download/index.html)
+
+For the installation of PETSc, and its simple applications for scientific computing, one is referred to my [PetscExercise](https://github.com/walkandthinker/PetscExercise).
+- [openmpi](http://www.open-mpi.de/) or [mpich](https://www.mpich.org/)
+
+The mpi library can be ignored for only sequential computing.
+
+
 
 
 # Catagories

@@ -11,7 +11,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -fopenmp -Ofast -march=corei7-avx")
 #set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 # For PETSC
 set(petsc "/home/by/Programs/petsc3.9.2")
@@ -23,4 +23,20 @@ set(mpi "/opt/moose/mpich-3.2/gcc-7.3.0")
 link_libraries("${mpi}/lib/libmpi.so")
 include_directories("${mpi}/include")
 
-add_executable(ASFEM src/main.cpp src/Mesh/MeshBase.h src/Mesh/Mesh1D.cpp src/Mesh/Mesh1D.h src/Welcome.h src/Mesh/Mesh2D.cpp src/Mesh/Mesh2D.h src/StringUtils/StringUtils.h src/StringUtils/RemoveSpace.cpp src/StringUtils/StrToLower.cpp src/StringUtils/StrVecToLower.cpp src/StringUtils/StrToUpper.cpp src/StringUtils/StrVecToUpper.cpp src/StringUtils/SplitStr.cpp src/StringUtils/SplitNum.cpp src/StringUtils/SplitNumAfter.cpp src/Mesh/Mesh.cpp src/Mesh/Mesh.h)
+
+# For Welcome header file and main.cpp
+set(HEADER include/Welcome.h)
+set(SRC src/main.cpp)
+
+# For string utils 
+set(HEADER ${HEADER} include/StringUtils/StringUtils.h)
+set(SRC ${SRC} src/StringUtils/RemoveSpace.cpp src/StringUtils/SplitNum.cpp)
+set(SRC ${SRC} src/StringUtils/SplitNumAfter.cpp src/StringUtils/SplitStr.cpp)
+set(SRC ${SRC} src/StringUtils/StrToLower.cpp src/StringUtils/StrToUpper.cpp)
+set(SRC ${SRC} src/StringUtils/StrVecToLower.cpp src/StringUtils/StrVecToUpper.cpp)
+
+# For mesh utils 
+set(HEADER ${HEADER} include/Mesh/MeshBase.h include/Mesh/Mesh1D.h include/Mesh/Mesh2D.h)
+set(SRC ${SRC} src/Mesh/Mesh1D.cpp src/Mesh/Mesh2D.cpp)
+
+add_executable(ASFEM ${HEADER} ${SRC})

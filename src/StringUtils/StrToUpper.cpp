@@ -9,7 +9,7 @@
 //*****************************************************
 
 #include <algorithm>
-#include "StringUtils.h"
+#include "StringUtils/StringUtils.h"
 
 string StrToUpper(string instr)
 {

@@ -8,7 +8,7 @@
 //***  i.e: "yang bai"-->"yangbai"                  ***
 //*****************************************************
 
-#include "StringUtils.h"
+#include "StringUtils/StringUtils.h"
 
 string RemoveSpace(string instr)
 {

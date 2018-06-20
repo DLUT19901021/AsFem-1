@@ -7,7 +7,7 @@
 //*** Function to split number from string after pos***
 //*****************************************************
 
-#include "StringUtils.h"
+#include "StringUtils/StringUtils.h"
 
 vector<double> SplitNumAfter(string instr,int pos)
 {

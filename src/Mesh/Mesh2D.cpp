@@ -8,7 +8,7 @@
 //***  inherit from mesh base                       ***
 //*****************************************************
 
-#include "Mesh2D.h"
+#include "Mesh/Mesh2D.h"
 
 Mesh2D::Mesh2D(double xmin, double xmax, double ymin, double ymax, int nx, int ny, string elmttype)
 {

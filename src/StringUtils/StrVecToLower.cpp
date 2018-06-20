@@ -8,7 +8,7 @@
 //*****************************************************
 
 #include <algorithm>
-#include "StringUtils.h"
+#include "StringUtils/StringUtils.h"
 
 vector<string> StrVecToLower(vector<string> instrvec)
 {
