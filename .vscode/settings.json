@@ -1,0 +1,11 @@
+{
+    // Controls the font size in pixels.
+    "editor.fontSize": 22,
+    "files.associations": {
+        "tuple": "cpp",
+        "istream": "cpp",
+        "ostream": "cpp",
+        "type_traits": "cpp",
+        "utility": "cpp"
+    },
+}
