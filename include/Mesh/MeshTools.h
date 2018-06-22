@@ -28,12 +28,18 @@ class MeshTools
 public:
     MeshTools();
 
-    void CreateMesh(double xmin,double xmax,int ne,string elmttype,Mesh &mesh);
+    void CreateMesh(Mesh &mesh,double xmin=0.0,double xmax=1.0,int nx=10,string elmttype="edge2");
 
-    void CreateMesh(double xmin,double xmax,
-                    double ymin,double ymax,
-                    int nx,int ny,string elmttype,
-                    Mesh &mesh);
+    void CreateMesh(Mesh &mesh,
+                    double xmin=0.0,double xmax=1.0,
+                    double ymin=0.0,double ymax=1.0,
+                    int nx=2,int ny=2,string elmttype="quad4");
+
+    void CreateMesh(Mesh &mesh,
+                    double xmin=0.0,double xmax=1.0,
+                    double ymin=0.0,double ymax=1.0,
+                    double zmin=0.0,double zmax=1.0,
+                    int nx=2,int ny=2,int nz=2,string elmttype="hex8");
 
 };
 

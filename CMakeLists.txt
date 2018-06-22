@@ -36,7 +36,10 @@ set(SRC ${SRC} src/StringUtils/StrToLower.cpp src/StringUtils/StrToUpper.cpp)
 set(SRC ${SRC} src/StringUtils/StrVecToLower.cpp src/StringUtils/StrVecToUpper.cpp)
 
 # For mesh utils 
-set(HEADER ${HEADER} include/Mesh/MeshBase.h include/Mesh/Mesh1D.h include/Mesh/Mesh2D.h include/Mesh/MeshTools.h)
-set(SRC ${SRC} src/Mesh/Mesh1D.cpp src/Mesh/Mesh2D.cpp src/Mesh/MeshTools.cpp)
+set(HEADER ${HEADER} include/Mesh/MeshBase.h include/Mesh/Mesh1D.h include/Mesh/Mesh2D.h)
+set(HEADER ${HEADER} include/Mesh/Mesh.h include/Mesh/MeshTools.h)
+
+set(SRC ${SRC} src/Mesh/Mesh1D.cpp src/Mesh/Mesh2D.cpp)
+set(SRC ${SRC} src/Mesh/MeshTools.cpp src/Mesh/Mesh.cpp)
 
 add_executable(ASFEM ${HEADER} ${SRC})

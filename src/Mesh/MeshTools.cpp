@@ -15,7 +15,7 @@ MeshTools::MeshTools()
     cout<<"This is a mesh tool"<<endl;
 }
 
-void MeshTools::CreateMesh(double xmin,double xmax,int ne,string elmttype,Mesh &mesh)
+void MeshTools::CreateMesh(Mesh &mesh,double xmin,double xmax,int nx,string elmttype)
 {
     if(xmin>=xmax)
     {
@@ -25,9 +25,9 @@ void MeshTools::CreateMesh(double xmin,double xmax,int ne,string elmttype,Mesh &
         abort();
     }
 
-    if(ne<2)
+    if(nx<2)
     {
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: nx=%6d is too less for a FEM problem!!!\n",ne);
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: nx=%6d is too less for a FEM problem!!!\n",nx);
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!\n");
         PetscFinalize();
         abort();

@@ -34,7 +34,8 @@ public:
     virtual double IthNodeJthCoords(int i,int j) const =0;
     virtual int IthConnJthIndex(int e,int j) const =0;
 
-    int nNodes,nElmts,nNodesPerElmt;
+    int nNodes,nElmts,nNodesPerElmt,nDims;
+    double Xmin,Xmax,Ymin,Ymax,Zmin,Zmax;
     int VTKCellType;
     string ElmtType;
     double *NodeCoords;

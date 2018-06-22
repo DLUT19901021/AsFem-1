@@ -1,6 +1,7 @@
 {
     // Controls the font size in pixels.
     "editor.fontSize": 22,
+    "editor.matchBrackets": true,
     "files.associations": {
         "tuple": "cpp",
         "istream": "cpp",
@@ -8,4 +9,6 @@
         "type_traits": "cpp",
         "utility": "cpp"
     },
+    "C_Cpp.autoAddFileAssociations": true,
+    "C_Cpp.autocomplete": "Default",
 }
