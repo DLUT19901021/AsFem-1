@@ -29,11 +29,15 @@ public:
 
     int Get1DMeshNum() const { return Mesh1DList.size();}
     int Get2DMeshNum() const { return Mesh2DList.size();}
+    int GetNodesNum() const { return nNodes;}
+    int GetElmtsNum() const { return nElmts;}
+    int GetNodesNumPerElmt() const { return nMaxNodesPerElmt;}
+    int GetDofsNumPerNode() const { return nDofsPerNode;}
 
     double IthNodeJthCoords(int i,int j) const;
     int IthConnJthIndex(int e,int j) const;
 
-    int GetIthVTKCellType() const;
+    int GetIthVTKCellType() const {return VTKCellType;}
 
     void Init();
     void Add1DMesh(Mesh1D &mesh1d);
@@ -47,11 +51,12 @@ private:
     bool Has1DMesh=false,Has2DMesh=false;
     vector<Mesh1D> Mesh1DList;
     vector<Mesh2D> Mesh2DList;
+    int VTKCellType;
 
     bool IsInit=false;
     double Xmin,Xmax,Ymin,Ymax,Zmin,Zmax;
     int Nx,Ny,Nz;
-    int nDim,nNodes,nElmts,nMaxNodesPerElmt;
+    int nDims,nNodes,nElmts,nMaxNodesPerElmt;
     int nDofsPerNode;
     vector<int> Conn;
     vector<double> NodeCoords;

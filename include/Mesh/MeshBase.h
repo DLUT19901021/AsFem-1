@@ -13,6 +13,7 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 #include <iomanip>
 
 
@@ -38,8 +39,8 @@ public:
     double Xmin,Xmax,Ymin,Ymax,Zmin,Zmax;
     int VTKCellType;
     string ElmtType;
-    double *NodeCoords;
-    int *Conn;
+    vector<double> NodeCoords;
+    vector<int> Conn;
     bool MeshGenerated;
 
 };

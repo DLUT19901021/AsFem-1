@@ -77,9 +77,8 @@ void Mesh2D::Release()
 {
     if(MeshGenerated)
     {
-        delete[] NodeCoords;
-        delete[] Conn;
-        delete[] BoundaryNodeIndex;
+        NodeCoords.clear();
+        Conn.clear();
 
         /*
          * TODO: assign node index or split mesh into boundary mesh
@@ -111,8 +110,9 @@ bool Mesh2D::CreateMesh()
         nNodesPerElmt=4;
         P=1;
 
-        NodeCoords=new double[nNodes*4];
-        Conn=new int[nElmts*nNodesPerElmt];
+        
+        NodeCoords.resize(nNodes*4,0.0);
+        Conn.resize(nElmts*nNodesPerElmt);
 
         if(Nx==1||Ny==1)
         {
@@ -191,8 +191,8 @@ bool Mesh2D::CreateMesh()
         P=2;
 
 
-        NodeCoords=new double[nNodes*4];
-        Conn=new int[nElmts*nNodesPerElmt];
+        NodeCoords.resize(nNodes*4,0.0);
+        Conn.resize(nElmts*nNodesPerElmt,0);
 
         if(Nx==1||Ny==1)
         {
@@ -314,8 +314,8 @@ bool Mesh2D::CreateMesh()
         P=2;
 
 
-        NodeCoords=new double[nNodes*4];
-        Conn=new int[nElmts*nNodesPerElmt];
+        NodeCoords.resize(nNodes*4,0.0);
+        Conn.resize(nElmts*nNodesPerElmt,0);
 
 
         if(Nx==1||Ny==1)

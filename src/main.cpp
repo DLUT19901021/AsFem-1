@@ -12,8 +12,8 @@
 
 // Include AsFem's own header file
 #include "Welcome.h"
-#include "Mesh/Mesh1D.h"
-#include "Mesh/Mesh2D.h"
+
+
 
 using namespace std;
 
@@ -24,12 +24,6 @@ int main(int argc,char *argv[])
     ierr=PetscInitialize(&argc,&argv,NULL,NULL);CHKERRQ(ierr);
 
     Welcome(version);
-
-    Mesh2D mesh2D(0.0,1.0,0.0,1.0,10,1,"quad9");
-    mesh2D.CreateMesh();
-
-    mesh2D.PrintMeshDetailInfo();
-
 
 	ierr=PetscFinalize();CHKERRQ(ierr);
 	return ierr;

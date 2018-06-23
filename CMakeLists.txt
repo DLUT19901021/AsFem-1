@@ -37,9 +37,16 @@ set(SRC ${SRC} src/StringUtils/StrVecToLower.cpp src/StringUtils/StrVecToUpper.c
 
 # For mesh utils 
 set(HEADER ${HEADER} include/Mesh/MeshBase.h include/Mesh/Mesh1D.h include/Mesh/Mesh2D.h)
-set(HEADER ${HEADER} include/Mesh/Mesh.h include/Mesh/MeshTools.h)
+set(HEADER ${HEADER} include/Mesh/Mesh.h)
 
 set(SRC ${SRC} src/Mesh/Mesh1D.cpp src/Mesh/Mesh2D.cpp)
-set(SRC ${SRC} src/Mesh/MeshTools.cpp src/Mesh/Mesh.cpp)
+set(SRC ${SRC} src/Mesh/Mesh.cpp)
+# For gauss point
+set(HEADER ${HEADER} include/FE/Qrule.h)
+set(SRC ${SRC} src/FE/Qrule.cpp)
+
+# For DofHandler
+set(HEADER ${HEADER} include/DofHandler/DofHandler.h)
+set(SRC ${SRC} src/DofHandler/DofHandler.cpp)
 
 add_executable(ASFEM ${HEADER} ${SRC})

@@ -36,6 +36,10 @@ public:
     virtual int GetVTKCellType() const override { return VTKCellType;}
     virtual string GetElmtType() const override { return ElmtType;}
 
+    int GetXmin() const {return Xmin;}
+    int GetXmax() const {return Xmax;}
+    bool IsMeshGenerated() const {return MeshGenerated;}
+    
     void Release();
 private:
     double Xmax,Xmin;

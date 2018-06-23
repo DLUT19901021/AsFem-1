@@ -42,21 +42,19 @@ Mesh1D::Mesh1D(double xmin, double xmax, int nx,string elmttype)
     ElmtType=elmttype;
 
     nBoundaryNodeIndex=0;
-    MeshGenerated=false;
 }
 
 void Mesh1D::Release()
 {
     if(MeshGenerated)
     {
-        delete[] NodeCoords;
-        delete[] Conn;
+        NodeCoords.clear();
+        Conn.clear();
     }
 }
 //**********************************************
 bool Mesh1D::CreateMesh()
 {
-    PetscMPIInt rank,size;
     int iStart,iEnd,rankn;
 
 
@@ -78,23 +76,18 @@ bool Mesh1D::CreateMesh()
 
     double dx=(Xmax-Xmin)/(nNodes-1.0);
 
-    NodeCoords=new double[nNodes*4];
-    Conn=new int[nElmts*nNodesPerElmt];
+    
+    NodeCoords.resize(nNodes*4,0.0);
+    Conn.resize(nElmts*nNodesPerElmt,0);
 
     nBoundaryNodeIndex=2;
     BoundaryNodeIndex[1-1]=1;
     BoundaryNodeIndex[2-1]=nNodes;
 
-    MPI_Comm_size(PETSC_COMM_WORLD,&size);
-    MPI_Comm_rank(PETSC_COMM_WORLD,&rank);
+    
 
     //TODO: it seems I need to consider about the mesh split by
     //      different cores, and the ghost effects!!!
-    rankn=nNodes/size;
-    iStart=rank*rankn;
-    iEnd=(rank+1)*rankn;
-    if(rank==size-1) iEnd=nNodes;
-
     iStart=0;iEnd=nNodes;
     for(i=iStart;i<iEnd;++i)
     {

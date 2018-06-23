@@ -33,6 +33,13 @@ public:
     virtual double IthNodeJthCoords(int i,int j) const override ;
     virtual int IthConnJthIndex(int e,int j) const override ;
 
+    int GetXmin() const {return Xmin;}
+    int GetXmax() const {return Xmax;}
+    int GetYmin() const {return Ymin;}
+    int GetYmax() const {return Ymax;}
+
+    bool IsMeshGenerated() const {return MeshGenerated;}
+    
     void Release();
 
 private:

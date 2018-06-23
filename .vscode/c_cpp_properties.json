@@ -4,7 +4,9 @@
             "name": "Linux",
             "browse": {
                 "path": [
-                    "${workspaceFolder}"
+                    "${workspaceFolder}",
+                    "${workspaceFolder}/include",
+                    "/home/by/Programs/petsc3.9.2/include"
                 ],
                 "limitSymbolsToIncludedHeaders": true
             },
