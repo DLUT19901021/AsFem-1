@@ -11,10 +11,15 @@
 #ifndef ASFEM_MESH1D_H
 #define ASFEM_MESH1D_H
 
+#include <iostream>
+#include <vector>
+#include <set>
+
 #include "StringUtils/StringUtils.h"
 #include "MeshBase.h"
 #include "petsc.h"
 
+using namespace std;
 
 class Mesh1D:public MeshBase
 {
@@ -36,16 +41,15 @@ public:
     virtual int GetVTKCellType() const override { return VTKCellType;}
     virtual string GetElmtType() const override { return ElmtType;}
 
-    int GetXmin() const {return Xmin;}
-    int GetXmax() const {return Xmax;}
+    double GetXmin() const {return Xmin;}
+    double GetXmax() const {return Xmax;}
     bool IsMeshGenerated() const {return MeshGenerated;}
     
     void Release();
 private:
     double Xmax,Xmin;
     int Nx,P;
-    int BoundaryNodeIndex[2],nBoundaryNodeIndex;
-
+    vector<pair<string,int>> BoundaryElmtSet;
 
 };
 

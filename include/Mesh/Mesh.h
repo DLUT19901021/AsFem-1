@@ -27,12 +27,24 @@ public:
     Mesh(int dim=3,int nnodesperelmt=27,int ndofspernode=1);
     void Release();
 
+    int GetDims() const { return nDims;}
     int Get1DMeshNum() const { return Mesh1DList.size();}
     int Get2DMeshNum() const { return Mesh2DList.size();}
+
+    int GetDofsNum() const { return nDofs;}
     int GetNodesNum() const { return nNodes;}
     int GetElmtsNum() const { return nElmts;}
+
+    int GetNodesNumPerBCElmt() const { return nNodesPerBCElmt;}
     int GetNodesNumPerElmt() const { return nMaxNodesPerElmt;}
     int GetDofsNumPerNode() const { return nDofsPerNode;}
+
+    int GetSideNodesNum(string sidename) const;
+    int GetSideElmtsNum(string sidename) const;
+    vector<int> GetIthBCElmtConn(string sidename,int e) const;
+
+    pair<string,vector<int>> GetSideSet(string sidename) const;
+    vector<pair<string,vector<int>>> GetBoundaryElmtSet() const { return BoundaryElmtSet;}
 
     double IthNodeJthCoords(int i,int j) const;
     int IthConnJthIndex(int e,int j) const;
@@ -57,9 +69,16 @@ private:
     double Xmin,Xmax,Ymin,Ymax,Zmin,Zmax;
     int Nx,Ny,Nz;
     int nDims,nNodes,nElmts,nMaxNodesPerElmt;
-    int nDofsPerNode;
+    int nDofsPerNode,nDofs;
     vector<int> Conn;
     vector<double> NodeCoords;
+
+    // For boundary mesh information
+    pair<string,vector<int>> LeftBCElmtSet,RightBCElmtSet;
+    pair<string,vector<int>> BottomBCElmtSet,TopBCElmtSet;
+    pair<string,vector<int>> BackBCElmtSet,FrontBCElmtSet;
+    vector<pair<string,vector<int>> > BoundaryElmtSet;
+    int nNodesPerBCElmt,nBCNodes,nBCElmts;
 
 };
 

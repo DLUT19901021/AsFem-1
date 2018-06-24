@@ -49,4 +49,19 @@ set(SRC ${SRC} src/FE/Qrule.cpp)
 set(HEADER ${HEADER} include/DofHandler/DofHandler.h)
 set(SRC ${SRC} src/DofHandler/DofHandler.cpp)
 
+# For Equation System
+set(HEADER ${HEADER} include/EquationSystem/EquationSystem.h)
+set(SRC ${SRC} src/EquationSystem/EquationSystem.cpp)
+# For SolverSystem
+set(HEADER ${HEADER} include/SolverSystem/SolverSystem.h)
+set(SRC ${SRC} src/SolverSystem/SolverSystem.cpp)
+
+# For InputSystem
+set(HEADER ${HEADER} include/InputSystem/InputSystem.h)
+set(SRC ${SRC} src/InputSystem/InputSystem.cpp)
+# For FESystem
+set(HEADER ${HEADER} include/FESystem/FESystem.h)
+set(SRC ${SRC} src/FESystem/FESystem.cpp include/BCSystem/BCSystem.h)
+
+
 add_executable(ASFEM ${HEADER} ${SRC})

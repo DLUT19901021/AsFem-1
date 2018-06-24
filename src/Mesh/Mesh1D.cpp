@@ -41,7 +41,7 @@ Mesh1D::Mesh1D(double xmin, double xmax, int nx,string elmttype)
     MeshGenerated=false;
     ElmtType=elmttype;
 
-    nBoundaryNodeIndex=0;
+    BoundaryElmtSet.clear();
 }
 
 void Mesh1D::Release()
@@ -50,6 +50,7 @@ void Mesh1D::Release()
     {
         NodeCoords.clear();
         Conn.clear();
+        BoundaryElmtSet.clear();
     }
 }
 //**********************************************
@@ -80,9 +81,7 @@ bool Mesh1D::CreateMesh()
     NodeCoords.resize(nNodes*4,0.0);
     Conn.resize(nElmts*nNodesPerElmt,0);
 
-    nBoundaryNodeIndex=2;
-    BoundaryNodeIndex[1-1]=1;
-    BoundaryNodeIndex[2-1]=nNodes;
+    
 
     
 
@@ -96,6 +95,8 @@ bool Mesh1D::CreateMesh()
         NodeCoords[i*4+2]=0.0;
         NodeCoords[i*4+3]=0.0;
     }
+
+
 
 
     //TODO: make mesh generation also parallel!
@@ -116,6 +117,12 @@ bool Mesh1D::CreateMesh()
     }
 
     MeshGenerated=true;
+    // Now we start to creat boundary element sets
+    pair<string,int> LeftSet=pair<string,int>("left",1);
+    pair<string,int> RightSet=pair<string,int>("right",nNodes);
+    BoundaryElmtSet.clear();
+    BoundaryElmtSet.push_back(LeftSet);
+    BoundaryElmtSet.push_back(RightSet);
 
     return MeshGenerated;
 }

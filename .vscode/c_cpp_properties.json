@@ -5,6 +5,7 @@
             "browse": {
                 "path": [
                     "${workspaceFolder}",
+                    "/opt/moose/gcc-7.3.0/include/c++/7.3.0",
                     "${workspaceFolder}/include",
                     "/home/by/Programs/petsc3.9.2/include"
                 ],
@@ -12,11 +13,12 @@
             },
             "includePath": [
                 "${workspaceFolder}",
+                "/opt/moose/gcc-7.3.0/include/c++/7.3.0",
                 "${workspaceFolder}/include",
                 "/home/by/Programs/petsc3.9.2/include"
             ],
             "defines": [],
-            "compilerPath": "/usr/bin/gcc",
+            "compilerPath": "/opt/moose/gcc-7.3.0/bin/gcc",
             "cStandard": "c11",
             "cppStandard": "c++14",
             "intelliSenseMode": "clang-x64"

@@ -13,6 +13,7 @@
 
 #include<iostream>
 #include<vector>
+#include <set>
 
 #include "petsc.h"
 
@@ -25,18 +26,26 @@ public:
     DofHandler();
 
     bool CreateLocalToGlobalDofMap(Mesh &mesh);
-    void GetLocalDofMap(const int e,int &ndofs,int *rInd,int *cInd);
+    void GetLocalDofMap(const int e,int &ndofs,int (&rInd)[500],int (&cInd)[500]) const;
+    void GetLocalBCDofMap(string sidename,const int e,int &ndofs,int (&Ind)[500]) const;
 
     void Release();
 
     void PrintDofMap() const;
 private:
     bool HasDofMap=false;
+    bool HasBCDofMap=false;
     int nDofs,nNodes,nElmts;
     int nDofsPerNode,nNodesPerElmts;
     int nDofsPerElmt;
 
     vector<int> GlobalDofMap;
+
+    pair<string,vector<int>> LeftSideDofMap,RightSideDofMap;
+    pair<string,vector<int>> BottomSideDofMap,TopSideDofMap;
+    vector< pair<string,vector<int>> > GlobalBCDofMap;
+
+    int nDofsPerBCElmt,nNodesPerBCElmt;
 
 };
 

@@ -13,7 +13,10 @@
 
 #include "StringUtils/StringUtils.h"
 #include "MeshBase.h"
+#include "Mesh1D.h"
 #include "petsc.h"
+
+class Mesh1D;
 
 class Mesh2D:public MeshBase
 {
@@ -33,10 +36,22 @@ public:
     virtual double IthNodeJthCoords(int i,int j) const override ;
     virtual int IthConnJthIndex(int e,int j) const override ;
 
-    int GetXmin() const {return Xmin;}
-    int GetXmax() const {return Xmax;}
-    int GetYmin() const {return Ymin;}
-    int GetYmax() const {return Ymax;}
+    double GetXmin() const {return Xmin;}
+    double GetXmax() const {return Xmax;}
+    double GetYmin() const {return Ymin;}
+    double GetYmax() const {return Ymax;}
+
+    int GetBCNodesNumPerElmt() const { return nNodesPerBCElmt;}
+    int GetBCNodesNum() const { return nBCNodes;}
+    int GetBCElmtsNum() const { return nBCElmts;}
+
+    int GetSideNodesNum(string sidename) const;
+    int GetSideElmtsNum(string sidename) const;
+    vector<int> GetIthBCElmtConn(string sidename,int e) const;
+
+
+    pair<string,vector<int>> GetSideSet(string sidename) const;
+    vector<pair<string,vector<int>>> GetBoundaryElmtSet() const { return BoundaryElmtSet;}
 
     bool IsMeshGenerated() const {return MeshGenerated;}
     
@@ -47,14 +62,12 @@ private:
     int Nx,Ny;
     int P;
 
-    // So, BoundaryNode=Left+Right+Bottom+Top
-    int *BoundaryNodeIndex,nBoundaryNodeIndex;
+    void SplitBoundaryMesh();
+    pair<string,vector<int>> LeftBCElmtSet,RightBCElmtSet;
+    pair<string,vector<int>> BottomBCElmtSet,TopBCElmtSet;
+    vector<pair<string,vector<int>> > BoundaryElmtSet;
+    int nNodesPerBCElmt,nBCNodes,nBCElmts;
 
-    int *LeftEdgeNodeIndex,nLeftEdgeNodeIndex;
-    int *RightEdgeNodeIndex,nRightEdgeNodeIndex;
-
-    int *BottomEdgeNodeIndex,nBottomEdgeNodeIndex;
-    int *TopEdgeNodeIndex,nTopEdgeNodeIndex;
 };
 
 

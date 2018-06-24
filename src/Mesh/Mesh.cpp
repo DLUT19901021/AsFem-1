@@ -55,6 +55,8 @@ Mesh::Mesh(int dim,int nnodesperelmt,int ndofspernode)
     Conn.clear();
     NodeCoords.clear();
 
+    BoundaryElmtSet.clear();
+
 }
 
 void Mesh::Release()
@@ -65,6 +67,7 @@ void Mesh::Release()
         Mesh2DList.clear();
         Conn.clear();
         NodeCoords.clear();
+        BoundaryElmtSet.clear();
     }
 }
 
@@ -152,6 +155,7 @@ void Mesh::Init()
     //       multiple blocks should be supported!
     IsInit=false;
 
+    nDofs=nDofsPerNode*nNodes;
     NodeCoords=vector<double>(4*nNodes,0.0);
     NodeCoords.resize(4*nNodes);
     Conn=vector<int>(nElmts*nMaxNodesPerElmt,0);
@@ -192,6 +196,20 @@ void Mesh::Init()
             }
         }
         VTKCellType=Mesh2DList[0].GetVTKCellType();
+
+
+        nNodesPerBCElmt=Mesh2DList[0].GetBCNodesNumPerElmt();
+        nBCNodes=Mesh2DList[0].GetBCNodesNum();
+        nBCElmts=Mesh2DList[0].GetBCElmtsNum();
+
+        LeftBCElmtSet=Mesh2DList[0].GetSideSet("left");
+        RightBCElmtSet=Mesh2DList[0].GetSideSet("right");
+        BottomBCElmtSet=Mesh2DList[0].GetSideSet("bottom");
+        TopBCElmtSet=Mesh2DList[0].GetSideSet("top");
+
+
+        BoundaryElmtSet=Mesh2DList[0].GetBoundaryElmtSet();
+
         IsInit=true;
     }
 }
@@ -258,6 +276,165 @@ int Mesh::IthConnJthIndex(int e,int j) const
 
 }
 
+//**************************************************
+int Mesh::GetSideNodesNum(string sidename) const
+{
+    if(sidename=="left")
+    {
+        return LeftBCElmtSet.second.size();
+    }
+    else if(sidename=="right")
+    {
+        return RightBCElmtSet.second.size();
+    }
+    else if(sidename=="bottom")
+    {
+        return BottomBCElmtSet.second.size();
+    }
+    else if(sidename=="top")
+    {
+        return TopBCElmtSet.second.size();
+    }
+    else
+    {
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: unsupported sidename(=%s)!\n",sidename.c_str());
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***        please use left,right,top,bottom,back,front!\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!\n");
+        PetscFinalize();
+        abort();
+    }
+}
+
+int Mesh::GetSideElmtsNum(string sidename) const
+{
+    if(sidename=="left")
+    {
+        return LeftBCElmtSet.second.size()/nNodesPerBCElmt;
+    }
+    else if(sidename=="right")
+    {
+        return RightBCElmtSet.second.size()/nNodesPerBCElmt;
+    }
+    else if(sidename=="bottom")
+    {
+        return BottomBCElmtSet.second.size()/nNodesPerBCElmt;
+    }
+    else if(sidename=="top")
+    {
+        return TopBCElmtSet.second.size()/nNodesPerBCElmt;
+    }
+    else
+    {
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: unsupported sidename(=%s)!\n",sidename.c_str());
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***        please use left,right,top,bottom,back,front!\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!\n");
+        PetscFinalize();
+        abort();
+    }
+}
+
+vector<int> Mesh::GetIthBCElmtConn(string sidename,int e) const
+{
+    vector<int> conn;
+    conn.resize(nNodesPerBCElmt);
+    if(sidename=="left")
+    {
+        if(e<1||e>LeftBCElmtSet.second.size()/nNodesPerBCElmt)
+        {
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: e=%d is out of boundary element's range!\n",e);
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!\n");
+            PetscFinalize();
+            abort();
+        }
+        for(int i=1;i<=nNodesPerBCElmt;i++)
+        {
+            conn[i-1]=LeftBCElmtSet.second[(e-1)*nNodesPerBCElmt+i-1];
+        }
+    }
+    else if(sidename=="right")
+    {
+        if(e<1||e>RightBCElmtSet.second.size()/nNodesPerBCElmt)
+        {
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: e=%d is out of boundary element's range!\n",e);
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!\n");
+            PetscFinalize();
+            abort();
+        }
+        for(int i=1;i<=nNodesPerBCElmt;i++)
+        {
+            conn[i-1]=RightBCElmtSet.second[(e-1)*nNodesPerBCElmt+i-1];
+        }
+    }
+    else if(sidename=="bottom")
+    {
+        if(e<1||e>BottomBCElmtSet.second.size()/nNodesPerBCElmt)
+        {
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: e=%d is out of boundary element's range!\n",e);
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!\n");
+            PetscFinalize();
+            abort();
+        }
+        for(int i=1;i<=nNodesPerBCElmt;i++)
+        {
+            conn[i-1]=BottomBCElmtSet.second[(e-1)*nNodesPerBCElmt+i-1];
+        }
+    }
+    else if(sidename=="top")
+    {
+        if(e<1||e>TopBCElmtSet.second.size()/nNodesPerBCElmt)
+        {
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: e=%d is out of boundary element's range!\n",e);
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!\n");
+            PetscFinalize();
+            abort();
+        }
+        for(int i=1;i<=nNodesPerBCElmt;i++)
+        {
+            conn[i-1]=TopBCElmtSet.second[(e-1)*nNodesPerBCElmt+i-1];
+        }
+    }
+    else
+    {
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: unsupported sidename(=%s)!\n",sidename.c_str());
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***        please use left,right,top,bottom,back,front!\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!\n");
+        PetscFinalize();
+        abort();
+    }
+
+    return conn;
+}
+
+pair<string,vector<int>> Mesh::GetSideSet(string sidename) const
+{
+    if(sidename=="left")
+    {
+        return LeftBCElmtSet;
+    }
+    else if(sidename=="right")
+    {
+        return RightBCElmtSet;
+    }
+    else if(sidename=="bottom")
+    {
+        return BottomBCElmtSet;
+    }
+    else if(sidename=="top")
+    {
+        return TopBCElmtSet;
+    }
+    else
+    {
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: unsupported sidename(=%s)!\n",sidename.c_str());
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***        please use left,right,top,bottom,back,front!\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!\n");
+        PetscFinalize();
+        abort();
+    }
+};
+
+//**************************************************
+
 //*****************************************
 void Mesh::PrintMeshInfo(string str) const
 {
@@ -281,12 +458,27 @@ void Mesh::PrintMeshInfo(string str) const
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   nNodes=%10d                    ***\n",nNodes);
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   nElmts=%10D                    ***\n",nElmts);
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   nNodesPerElmt=%3d                    ***\n",nMaxNodesPerElmt);
+
+    int i,j;
+    i=LeftBCElmtSet.second.size();j=LeftBCElmtSet.second.size()/nNodesPerBCElmt;
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   Left side nodes=%5d, elmts=%5d   ***\n",i,j);
+
+    i=RightBCElmtSet.second.size();j=RightBCElmtSet.second.size()/nNodesPerBCElmt;
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   Right side nodes=%5d, elmts=%5d  ***\n",i,j);
+
+    i=BottomBCElmtSet.second.size();j=BottomBCElmtSet.second.size()/nNodesPerBCElmt;
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   Bottom side nodes=%5d, elmts=%5d ***\n",i,j);
+
+    i=TopBCElmtSet.second.size();j=TopBCElmtSet.second.size()/nNodesPerBCElmt;
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   Top side nodes=%5d, elmts=%5d    ***\n",i,j);
+
+
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
 
 }
 void Mesh::PrintMeshDetailInfo(string str) const
 {
-    int i,e;
+    int i,j,e;
     double x,y,z,w;
     if(!IsInit)
     {
@@ -303,7 +495,7 @@ void Mesh::PrintMeshDetailInfo(string str) const
     {
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** str= %s\n",str.c_str());
     }
-    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Mesh detailed information:              ***\n");
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Mesh detailed information:             ***\n");
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   nDims=%2d                             ***\n",nDims);
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   nNodes=%10d                    ***\n",nNodes);
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   nElmts=%10D                    ***\n",nElmts);
@@ -330,6 +522,26 @@ void Mesh::PrintMeshDetailInfo(string str) const
         }
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"\n");
     }
+
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Boundary element's connectivity:       ***\n");
+    string sidename;
+    for(i=1;i<=BoundaryElmtSet.size();++i)
+    {
+        sidename=BoundaryElmtSet[i-1].first;
+
+        for(e=1;e<=BoundaryElmtSet[i-1].second.size()/nNodesPerBCElmt;++e)
+        {
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** %8s side->",sidename.c_str());
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"e=%3d:",e);
+            for(j=1;j<=nNodesPerBCElmt;j++)
+            {
+                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"%5d ",BoundaryElmtSet[i-1].second[(e-1)*nNodesPerBCElmt+j-1]);
+            }
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"\n");
+        }
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"\n");
+    }
+
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
 
 }
