@@ -67,11 +67,14 @@ set(SRC ${SRC} src/InputSystem/ReadMesh.cpp)
 # For FESystem
 set(HEADER ${HEADER} include/FESystem/FESystem.h)
 set(SRC ${SRC} src/FESystem/FESystem.cpp include/BCSystem/BCSystem.h)
+set(HEADER ${HEADER} include/FE/FE.h)
+set(SRC ${SRC} src/FE/FE.cpp)
 
 # For Kernels
 set(HEADER ${HEADER} include/Kernels/Kernel.h include/Kernels/BoundaryKernel.h)
+
 set(HEADER ${HEADER} include/Kernels/Laplace.h)
-set(SRC ${SRC} src/FESystem/FESystem.cpp include/BCSystem/BCSystem.h)
+set(SRC ${SRC} src/Kernels/Laplace.cpp)
 
 
-add_executable(ASFEM ${HEADER} ${SRC} src/Kernels/Laplace.cpp)
+add_executable(ASFEM ${HEADER} ${SRC} )

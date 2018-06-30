@@ -32,7 +32,7 @@ void DofHandler::Release()
 }
 
 //******************************
-bool DofHandler::CreateLocalToGlobalDofMap(Mesh &mesh)
+bool DofHandler::CreateLocalToGlobalDofMap(Mesh &mesh,int ndofspernode)
 {
     HasDofMap=false;
     GlobalDofMap.clear();
@@ -40,7 +40,7 @@ bool DofHandler::CreateLocalToGlobalDofMap(Mesh &mesh)
     nNodes=mesh.GetNodesNum();
     nElmts=mesh.GetElmtsNum();
     nNodesPerElmts=mesh.GetNodesNumPerElmt();
-    nDofsPerNode=mesh.GetDofsNumPerNode();
+    nDofsPerNode=ndofspernode;
     nDofs=nNodes*nDofsPerNode;
     nDofsPerElmt=nNodesPerElmts*nDofsPerNode;
 

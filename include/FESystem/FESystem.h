@@ -28,6 +28,8 @@ public:
 
     void ReadAsFemInputFile(int argc,char *argv[]);
 
+    void InitFESystem();
+
     void RegisterKernel();// If you have your own kernel, register it here
 
     void RegisterMaterial();// If you have your own material, register it here

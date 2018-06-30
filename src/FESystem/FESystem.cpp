@@ -28,10 +28,35 @@ void FESystem::ReadAsFemInputFile(int argc,char *argv[])
     inputSystem.ReadDofsName(equationSystem);
 }
 
+void FESystem::InitFESystem()
+{
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***----------------------------------------***\n");
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***--- Start initializing FESystem --------***\n");
+
+
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***---   Start initializing DofHandler...  ***\n");
+    dofHandler.CreateLocalToGlobalDofMap(mesh,equationSystem.GetSolutionNum());
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***---   DofHandler initialized.           ***\n");
+
+
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***---   Start initializing EquationSystem ***\n");
+    equationSystem.SetDofsNum(mesh.GetNodesNum()*equationSystem.GetSolutionNum());
+    equationSystem.Init();
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***---   EquationSystem initialized...     ***\n");
+
+
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***---   Start initializing SolverSystem...***\n");
+    solverSystem.Init();
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***---   SolverSystem initialized.         ***\n");
+
+
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***--- FESystem initialized. --------------***\n");
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***----------------------------------------***\n");
+}
+
 void FESystem::Run()
 {
-    AssembleFESystem();
-    //ApplyBoundaryCondtion();
+
 }
 
 void FESystem::AssembleFESystem()

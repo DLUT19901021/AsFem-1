@@ -4,36 +4,28 @@
 //*** Bug report: walkandthinker@gmail.com          ***
 //*** QQ group: 797998860                           ***
 //*****************************************************
-//*** This class define the solver system of AsFem  ***
-//***  solver based on PETSc's ksp solver           ***
+//*** This class defines the core parts of AsFem    ***
+//***  basical and elemental calculation of FEM     ***
+//***  element loop and matrix assembly code        ***
+//***  should be put here                           ***
 //*****************************************************
 
-#ifndef ASFEM_SOLVERSYSTEM_H
-#define ASFEM_SOLVERSYSTEM_H
+#ifndef ASFEM_FE_H
+#define ASFEM_FE_H
 
 #include <iostream>
-
+#include <vector>
 #include "petsc.h"
 
-#include "EquationSystem/EquationSystem.h"
+using namespace std;
 
-class SolverSystem
+class FE
 {
 public:
-    SolverSystem();
-
-    bool Init();
-    bool Solve(Mat &A,Vec &dU,Vec &RHS);
-
-    int GetKSPIterations() const;
+    FE();
 
 
-
-    void Release();
-
-private:
-    KSP ksp;
-    PetscErrorCode ierr;
 };
 
-#endif //ASFEM_SOLVERSYSTEM_H
+
+#endif //ASFEM_FE_H

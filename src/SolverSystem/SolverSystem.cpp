@@ -10,9 +10,9 @@
 
 #include "SolverSystem/SolverSystem.h"
 
-SolverSystem::SolverSystem(MPI_Comm comm)
+SolverSystem::SolverSystem()
 {
-    KSPCreate(comm,&ksp);
+    KSPCreate(PETSC_COMM_WORLD,&ksp);
 
     KSPSetTolerances(ksp,
                      PETSC_DEFAULT,
@@ -21,6 +21,22 @@ SolverSystem::SolverSystem(MPI_Comm comm)
                      1000000);
 
     KSPSetFromOptions(ksp);
+    /*
+    KSPSetUp(ksp);// TODO: it seems call this can lead to some PETSs errors?
+     */
+}
+
+bool SolverSystem::Init()
+{
+    KSPCreate(PETSC_COMM_WORLD,&ksp);
+
+    KSPSetTolerances(ksp,
+                     PETSC_DEFAULT,
+                     PETSC_DEFAULT,
+                     PETSC_DEFAULT,
+                     1000000);
+
+    return KSPSetFromOptions(ksp);
     /*
     KSPSetUp(ksp);// TODO: it seems call this can lead to some PETSs errors?
      */

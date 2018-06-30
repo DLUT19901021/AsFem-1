@@ -76,6 +76,8 @@ PetscErrorCode EquationSystem::Init()
     // initialize
     ierr=VecSet(U0,0.0);CHKERRQ(ierr);
     ierr=VecSet(RHS,0.0);CHKERRQ(ierr);
+
+    nDofsPerNode=solution_name_list.size();
 }
 
 PetscErrorCode EquationSystem::Release()
@@ -199,6 +201,7 @@ void EquationSystem::SetSolutionNameFromVector(vector<string> names, vector<int>
             solution_name_map.push_back(temp);
         }
         SolutionHasName=true;
+        nDofsPerNode=orders.size();
     }
 }
 
@@ -245,6 +248,7 @@ void EquationSystem::SetSolutionName()
         solution_name_map.push_back(temp);
     }
     SolutionHasName=true;
+    nDofsPerNode=solution_index_list.size();
 }
 
 //*****************************************

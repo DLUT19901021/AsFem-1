@@ -25,7 +25,7 @@ class DofHandler
 public:
     DofHandler();
 
-    bool CreateLocalToGlobalDofMap(Mesh &mesh);
+    bool CreateLocalToGlobalDofMap(Mesh &mesh,int ndofspernode);
     void GetLocalDofMap(const int e,int &ndofs,int (&rInd)[500],int (&cInd)[500]) const;
     void GetLocalBCDofMap(string sidename,const int e,int &ndofs,int (&Ind)[500]) const;
 

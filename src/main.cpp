@@ -27,7 +27,7 @@ int main(int argc,char *argv[])
 
     FESystem feSystem;
     feSystem.ReadAsFemInputFile(argc,argv);
-
+    feSystem.InitFESystem();
 
 
 	ierr=PetscFinalize();CHKERRQ(ierr);

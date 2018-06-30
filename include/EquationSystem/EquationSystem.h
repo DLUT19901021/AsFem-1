@@ -32,9 +32,13 @@ public:
     Mat AMATRIX;
     Vec RHS,dU,U;
 
+    int GetSolutionNum() const { return nDofsPerNode;}
+    int GetDofsNum() const{ return nDofs;}
     void AddSolutionNameAndIndex(string name,int order);
     void SetSolutionNameFromVector(vector<string> names,vector<int> orders);
     void SetSolutionName();
+
+    void SetDofsNum(int ndofs) {nDofs=ndofs;}
 
     string GetIthDofsName(const int i) const;
 
