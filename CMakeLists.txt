@@ -34,6 +34,7 @@ set(SRC ${SRC} src/StringUtils/RemoveSpace.cpp src/StringUtils/SplitNum.cpp)
 set(SRC ${SRC} src/StringUtils/SplitNumAfter.cpp src/StringUtils/SplitStr.cpp)
 set(SRC ${SRC} src/StringUtils/StrToLower.cpp src/StringUtils/StrToUpper.cpp)
 set(SRC ${SRC} src/StringUtils/StrVecToLower.cpp src/StringUtils/StrVecToUpper.cpp)
+set(SRC ${SRC} src/StringUtils/IsBracketMatch.cpp src/StringUtils/GotoLine.cpp)
 
 # For mesh utils 
 set(HEADER ${HEADER} include/Mesh/MeshBase.h include/Mesh/Mesh1D.h include/Mesh/Mesh2D.h)
@@ -58,10 +59,19 @@ set(SRC ${SRC} src/SolverSystem/SolverSystem.cpp)
 
 # For InputSystem
 set(HEADER ${HEADER} include/InputSystem/InputSystem.h)
-set(SRC ${SRC} src/InputSystem/InputSystem.cpp)
+set(SRC ${SRC} src/InputSystem/InputSystem.cpp src/InputSystem/ReadDofsName.cpp)
+
+#--> for mesh
+set(SRC ${SRC} src/InputSystem/ReadMesh.cpp)
+
 # For FESystem
 set(HEADER ${HEADER} include/FESystem/FESystem.h)
 set(SRC ${SRC} src/FESystem/FESystem.cpp include/BCSystem/BCSystem.h)
 
+# For Kernels
+set(HEADER ${HEADER} include/Kernels/Kernel.h include/Kernels/BoundaryKernel.h)
+set(HEADER ${HEADER} include/Kernels/Laplace.h)
+set(SRC ${SRC} src/FESystem/FESystem.cpp include/BCSystem/BCSystem.h)
 
-add_executable(ASFEM ${HEADER} ${SRC})
+
+add_executable(ASFEM ${HEADER} ${SRC} src/Kernels/Laplace.cpp)

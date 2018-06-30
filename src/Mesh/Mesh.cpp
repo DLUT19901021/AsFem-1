@@ -59,6 +59,30 @@ Mesh::Mesh(int dim,int nnodesperelmt,int ndofspernode)
 
 }
 
+Mesh::Mesh()
+{
+
+    Has1DMesh=false;
+    Has2DMesh=false;
+    IsInit=false;
+    nDims=1;nNodes=0;nElmts=0;
+    nMaxNodesPerElmt=0;
+    nDofsPerNode=0;
+
+    Xmin=Ymin=Zmin=1.0e12;
+    Xmax=Ymax=Zmax=1.0e-12;
+    Nx=0;Ny=0;Nz=0;
+
+    Mesh1DList.clear();
+    Mesh2DList.clear();
+
+    Conn.clear();
+    NodeCoords.clear();
+
+    BoundaryElmtSet.clear();
+
+}
+
 void Mesh::Release()
 {
     if(IsInit)
@@ -107,6 +131,12 @@ void Mesh::Add1DMesh(Mesh1D &mesh1d)
     Has1DMesh=true;
     nNodes+=mesh1d.GetNodesNum();
     nElmts+=mesh1d.GetElmtsNum();
+
+    if(nMaxNodesPerElmt<mesh1d.GetNodesNumPerElmt())
+    {
+        nMaxNodesPerElmt=mesh1d.GetNodesNumPerElmt();
+    }
+    nDims=1;
 }
 void Mesh::Add2DMesh(Mesh2D &mesh2d)
 {
@@ -119,7 +149,7 @@ void Mesh::Add2DMesh(Mesh2D &mesh2d)
         abort();
     }
 
-    if(nDims!=2)
+    if(mesh2d.nDims!=2)
     {
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: you can't insert 1/3D mesh into 2d case!!!\n");
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***        currently only one kind of mesh is supported!\n");
@@ -145,6 +175,11 @@ void Mesh::Add2DMesh(Mesh2D &mesh2d)
     Has2DMesh=true;
     nNodes+=mesh2d.GetNodesNum();
     nElmts+=mesh2d.GetElmtsNum();
+    if(nMaxNodesPerElmt<mesh2d.GetNodesNumPerElmt())
+    {
+        nMaxNodesPerElmt=mesh2d.GetNodesNumPerElmt();
+    }
+    nDims=2;
 }
 
 //********************************************
@@ -178,6 +213,7 @@ void Mesh::Init()
             }
         }
         IsInit=true;
+        cout<<"work"<<endl;
     }
     else if(Has2DMesh)
     {

@@ -13,6 +13,7 @@
 #define ASFEM_INPUTSYSTEM_H
 
 #include <iostream>
+#include <fstream>
 #include <iomanip>
 
 #include "petsc.h"
@@ -29,12 +30,20 @@ class InputSystem
 public:
     InputSystem(int argc,char *argv[]);
 
+    void CloseFile();
+
+    string GetInpFileName() const { return FileName;}
+
     bool ReadMesh(Mesh &mesh);
     bool ReadDofsName(EquationSystem &equationSystem);
+    bool ReadKernels();
     bool ReadBoundaryCondition();
-    bool
+    bool ReadInitialCondition();
+
 private:
     string FileName;
+    ifstream in;
+    enum {builtin,import};
 
 };
 

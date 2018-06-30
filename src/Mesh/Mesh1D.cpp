@@ -35,7 +35,7 @@ Mesh1D::Mesh1D(double xmin, double xmax, int nx,string elmttype)
         abort();
     }
 
-    Xmin=xmin;Xmax=xmax;
+    Xmin=xmin;Xmax=xmax;nDims=1;
     Nx=nx;
     nNodes=0;nNodesPerElmt=0;nElmts=0;
     MeshGenerated=false;

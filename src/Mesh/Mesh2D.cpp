@@ -59,7 +59,7 @@ Mesh2D::Mesh2D(double xmin, double xmax, double ymin, double ymax, int nx, int n
     Xmin=xmin;Xmax=xmax;
     Ymin=ymin;Ymax=ymax;
 
-    Nx=nx;Ny=ny;
+    Nx=nx;Ny=ny;nDims=2;
     nNodes=0;nNodesPerElmt=0;nElmts=0;
     MeshGenerated=false;
     ElmtType=elmttype;

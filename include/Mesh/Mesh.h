@@ -24,10 +24,12 @@ using namespace std;
 class Mesh
 {
 public:
-    Mesh(int dim=3,int nnodesperelmt=27,int ndofspernode=1);
+    Mesh(int dim,int nnodesperelmt,int ndofspernode);
+    Mesh();
     void Release();
 
     int GetDims() const { return nDims;}
+    void SetDims(int dim) {nDims=dim;}
     int Get1DMeshNum() const { return Mesh1DList.size();}
     int Get2DMeshNum() const { return Mesh2DList.size();}
 

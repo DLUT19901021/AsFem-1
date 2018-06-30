@@ -14,7 +14,7 @@
 
 EquationSystem::EquationSystem(const int dofs,int dofspernode)
 {
-    const int MaxDofs=5000000;//500W
+
     if(dofs<2||dofs>MaxDofs)
     {
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: dofs number=%-8d is not supported in current version!\n",dofs);
@@ -33,6 +33,16 @@ EquationSystem::EquationSystem(const int dofs,int dofspernode)
     }
 
     nDofs=dofs;nDofsPerNode=dofspernode;
+    solution_name_list.clear();
+    solution_index_list.clear();
+    IsInit=false;
+    SolutionHasName=false;
+}
+
+EquationSystem::EquationSystem()
+{
+
+    nDofs=0;nDofsPerNode=0;
     solution_name_list.clear();
     solution_index_list.clear();
     IsInit=false;

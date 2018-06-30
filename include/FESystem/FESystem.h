@@ -13,6 +13,7 @@
 #ifndef ASFEM_FESYSTEM_H
 #define ASFEM_FESYSTEM_H
 
+#include "InputSystem/InputSystem.h"
 #include "Mesh/Mesh.h"
 #include "DofHandler/DofHandler.h"
 #include "EquationSystem/EquationSystem.h"
@@ -21,12 +22,11 @@
 class FESystem
 {
 public:
-    FESystem(Mesh &mesh,
-             DofHandler &dofHandler,
-             EquationSystem &equationSystem,
-             SolverSystem &solverSystem);
+    FESystem();
 
     enum {Steady,Transient};
+
+    void ReadAsFemInputFile(int argc,char *argv[]);
 
     void RegisterKernel();// If you have your own kernel, register it here
 
@@ -51,6 +51,12 @@ private:
     vector<int> MaterialKernelList;
     vector<int> BoundaryKernelList;
     vector<int> AuxKernelList;
+
+private:
+    Mesh mesh;
+    DofHandler dofHandler;
+    EquationSystem equationSystem;
+    SolverSystem solverSystem;
 };
 
 

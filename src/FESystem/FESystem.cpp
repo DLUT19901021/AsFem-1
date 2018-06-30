@@ -12,15 +12,20 @@
 
 #include "FESystem/FESystem.h"
 
-FESystem::FESystem(Mesh &mesh,
-                   DofHandler &dofHandler,
-                   EquationSystem &equationSystem,
-                   SolverSystem &solverSystem)
+FESystem::FESystem()
 {
     KernelList.clear();
     MaterialKernelList.clear();
     BoundaryKernelList.clear();
     AuxKernelList.clear();
+}
+
+void FESystem::ReadAsFemInputFile(int argc,char *argv[])
+{
+    InputSystem inputSystem(argc,argv);
+
+    inputSystem.ReadMesh(mesh);
+    inputSystem.ReadDofsName(equationSystem);
 }
 
 void FESystem::Run()

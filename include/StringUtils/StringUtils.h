@@ -14,6 +14,7 @@
 #define ASFEM_STRINGUTILS_H
 
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <vector>
 
@@ -30,5 +31,9 @@ vector<string> SplitStr(string instr,char symbol);
 
 vector<double> SplitNum(string instr); //
 vector<double> SplitNumAfter(string instr,int pos);
+
+bool IsBracketMatch(ifstream &in,string &bracketstr,int &startline);
+
+void GotoLine(ifstream &in,int linenum);
 
 #endif //ASFEM_STRINGUTILS_H

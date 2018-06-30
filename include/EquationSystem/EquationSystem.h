@@ -26,6 +26,7 @@ class EquationSystem
 {
 public:
     EquationSystem(const int dofs,int dofspernode=1);
+    EquationSystem();
 
     PetscErrorCode Init();
     Mat AMATRIX;
@@ -43,6 +44,7 @@ public:
     void PrintSolutionNameMap(string str="") const;
 
 private:
+    const int MaxDofs=5000000;//500W
     bool IsInit=false;
     PetscErrorCode ierr;
     int nDofs,nDofsPerNode;
