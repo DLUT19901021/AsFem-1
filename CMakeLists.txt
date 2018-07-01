@@ -13,17 +13,28 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
+###################################################
+### Please edit the PETSc and MPI library path  ###
+###  based on your own installtion              ###
+###################################################
 # For PETSC
 set(petsc "/home/by/Programs/petsc3.9.2")
 include_directories("${petsc}/include")
 link_libraries("${petsc}/lib/libpetsc.so")
-
 # For libmpi
 set(mpi "/opt/moose/mpich-3.2/gcc-7.3.0")
 link_libraries("${mpi}/lib/libmpi.so")
 include_directories("${mpi}/include")
+###################################################
 
 
+##################################################
+##################################################
+### Do not edit the following lines !!!        ###
+### Do not edit the following lines !!!        ###
+### Do not edit the following lines !!!        ###
+##################################################
+##################################################
 # For Welcome header file and main.cpp
 set(HEADER include/Welcome.h)
 set(SRC src/main.cpp)
@@ -68,7 +79,7 @@ set(SRC ${SRC} src/InputSystem/ReadMesh.cpp)
 set(HEADER ${HEADER} include/FESystem/FESystem.h)
 set(SRC ${SRC} src/FESystem/FESystem.cpp include/BCSystem/BCSystem.h)
 set(HEADER ${HEADER} include/FE/FE.h)
-set(SRC ${SRC} src/FE/FE.cpp)
+set(SRC ${SRC} src/FE/FE.cpp src/FE/Shp1D.cpp src/FE/Shp2D.cpp src/FE/Shp3D.cpp)
 
 # For Kernels
 set(HEADER ${HEADER} include/Kernels/Kernel.h include/Kernels/BoundaryKernel.h)
@@ -77,4 +88,4 @@ set(HEADER ${HEADER} include/Kernels/Laplace.h)
 set(SRC ${SRC} src/Kernels/Laplace.cpp)
 
 
-add_executable(ASFEM ${HEADER} ${SRC} )
+add_executable(ASFEM ${HEADER} ${SRC})

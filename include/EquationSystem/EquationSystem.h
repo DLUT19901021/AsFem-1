@@ -30,7 +30,7 @@ public:
 
     PetscErrorCode Init();
     Mat AMATRIX;
-    Vec RHS,dU,U;
+    Vec RHS,dU,U,V;
 
     int GetSolutionNum() const { return nDofsPerNode;}
     int GetDofsNum() const{ return nDofs;}

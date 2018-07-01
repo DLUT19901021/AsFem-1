@@ -72,10 +72,12 @@ PetscErrorCode EquationSystem::Init()
     ierr=VecDuplicate(U0,&RHS);CHKERRQ(ierr);
     ierr=VecDuplicate(U0,&dU);CHKERRQ(ierr);
     ierr=VecDuplicate(U0,&U);CHKERRQ(ierr);
+    ierr=VecDuplicate(U0,&V);CHKERRQ(ierr);
 
     // initialize
     ierr=VecSet(U0,0.0);CHKERRQ(ierr);
     ierr=VecSet(RHS,0.0);CHKERRQ(ierr);
+    ierr=VecSet(V,0.0);CHKERRQ(ierr);
 
     nDofsPerNode=solution_name_list.size();
 }
@@ -86,6 +88,7 @@ PetscErrorCode EquationSystem::Release()
 
     ierr=VecDestroy(&U0);CHKERRQ(ierr);
     ierr=VecDestroy(&U);CHKERRQ(ierr);
+    ierr=VecDestroy(&V);CHKERRQ(ierr);
     ierr=VecDestroy(&dU);CHKERRQ(ierr);
     ierr=VecDestroy(&RHS);CHKERRQ(ierr);
 
