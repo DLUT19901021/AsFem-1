@@ -19,6 +19,7 @@
 
 //* For AsFem's own header file
 #include "Welcome.h"
+#include "Mesh/Mesh.h"
 
 using namespace std;
 
@@ -33,6 +34,21 @@ int main(int args,char *argv[])
     ierr=PetscInitialize(&args,&argv,NULL,NULL);CHKERRQ(ierr);
 
     Welcome(version);
+
+    Mesh mesh;
+
+    mesh.SetDim(3);
+    mesh.SetNx(1);
+
+    mesh.SetXmax(1.0);
+    mesh.SetXmin(0.0);
+
+    mesh.SetYmin(1.0);
+    mesh.SetYmax(2.0);
+
+    mesh.SetZmax(2.0);
+    mesh.SetZmin(.5);
+
 
     ierr=PetscFinalize();CHKERRQ(ierr);
     return ierr;

@@ -4,7 +4,7 @@ project(AsFem)
 set(CMAKE_CXX_STANDARD 14)
 
 # For debug mode
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -fopenmp -O2")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror -fopenmp -O2")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 
 # For release mode
@@ -49,7 +49,7 @@ set(SRC src/main.cpp)
 
 # For mesh utils 
 set(HEADER ${HEADER} include/Mesh/Mesh.h)
-set(SRC ${SRC} include/Mesh/Mesh.h src/Mesh/Mesh.cpp)
+set(SRC ${SRC} src/Mesh/Mesh.cpp src/Mesh/CreateMesh.cpp)
 
 add_executable(ASFEM ${HEADER} ${SRC})
 
